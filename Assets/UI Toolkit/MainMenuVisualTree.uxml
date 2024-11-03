@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=f6fc5c7622737be4db209e29d7320b25&amp;type=3#MainMenuStyle" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Materials/beach-sky.png?fileID=2800000&amp;guid=36af45f817607e24a8da35618654b7cc&amp;type=3#beach-sky&quot;);">
+        <engine:Label text="Unnamed Game" name="Header" class="header" style="margin-top: 545px;" />
+        <engine:Button class="button" style="background-image: url(&quot;project://database/Assets/Mobile%20Game%20GUI%20Vector%20Pack/Sprite/Button/start.png?fileID=21300000&amp;guid=2b670f90a30bf0044a38c1a3a42638bc&amp;type=3#start&quot;); border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; margin-top: 870px;" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -28,10 +28,10 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
             ""id"": ""20efe131-50c6-4b74-90e2-6a6b20e4d436"",
             ""actions"": [
                 {
-                    ""name"": ""TouchInput"",
+                    ""name"": ""TouchPosition"",
                     ""type"": ""Value"",
-                    ""id"": ""a7693546-f330-444a-9028-3791af551ce2"",
-                    ""expectedControlType"": ""Touch"",
+                    ""id"": ""b922ba03-cf34-42ff-b135-d4303b0698ca"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -40,12 +40,12 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""6cf6fcf8-a549-444a-b26e-5b7607ad69a2"",
-                    ""path"": ""<Touchscreen>/primaryTouch"",
+                    ""id"": ""f8c63d69-f0bf-4f22-9730-640ee3e80e59"",
+                    ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TouchInput"",
+                    ""action"": ""TouchPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -56,7 +56,7 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
 }");
         // Touch
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-        m_Touch_TouchInput = m_Touch.FindAction("TouchInput", throwIfNotFound: true);
+        m_Touch_TouchPosition = m_Touch.FindAction("TouchPosition", throwIfNotFound: true);
     }
 
     ~@TouchInput()
@@ -123,12 +123,12 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
     // Touch
     private readonly InputActionMap m_Touch;
     private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
-    private readonly InputAction m_Touch_TouchInput;
+    private readonly InputAction m_Touch_TouchPosition;
     public struct TouchActions
     {
         private @TouchInput m_Wrapper;
         public TouchActions(@TouchInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @TouchInput => m_Wrapper.m_Touch_TouchInput;
+        public InputAction @TouchPosition => m_Wrapper.m_Touch_TouchPosition;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -138,16 +138,16 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_TouchActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_TouchActionsCallbackInterfaces.Add(instance);
-            @TouchInput.started += instance.OnTouchInput;
-            @TouchInput.performed += instance.OnTouchInput;
-            @TouchInput.canceled += instance.OnTouchInput;
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
         }
 
         private void UnregisterCallbacks(ITouchActions instance)
         {
-            @TouchInput.started -= instance.OnTouchInput;
-            @TouchInput.performed -= instance.OnTouchInput;
-            @TouchInput.canceled -= instance.OnTouchInput;
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
         }
 
         public void RemoveCallbacks(ITouchActions instance)
@@ -167,6 +167,6 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
     public TouchActions @Touch => new TouchActions(this);
     public interface ITouchActions
     {
-        void OnTouchInput(InputAction.CallbackContext context);
+        void OnTouchPosition(InputAction.CallbackContext context);
     }
 }

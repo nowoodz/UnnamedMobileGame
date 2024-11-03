@@ -18,10 +18,12 @@ public class GeneralGameObject : MonoBehaviour
     Vector3 randomRotationVector;
     #endregion
 
+    GameManager gameManager;
 
- 
-    void Start()
+
+    private void Awake()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         #region Rotation Starts
         randomRotationVectorList.Add(randomRotVectorX);
@@ -32,7 +34,6 @@ public class GeneralGameObject : MonoBehaviour
         int randomRotationInt = Random.Range(0, randomRotationVectorList.Count);
         randomRotationVector = randomRotationVectorList[randomRotationInt];
         #endregion
-
     }
 
     // Update is called once per frame
@@ -42,9 +43,11 @@ public class GeneralGameObject : MonoBehaviour
         transform.Rotate(randomRotationVector * rotationSpeed * Time.deltaTime);
 
     }
-
-    private void OnTriggerEnter(Collider other)
+    public void GameObjectTouched()
     {
+        gameManager.currentGameScore++;
+
         Destroy(gameObject);
     }
+
 }

@@ -1,0 +1,28 @@
+.header {
+    font-size: 130px;
+    color: rgb(255, 255, 255);
+    align-self: auto;
+    -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Assets/TypeOut/Fonts/HACKED_Title.ttf?fileID=12800000&guid=0d321ad12fe3d4391b506737af0972d1&type=3#HACKED_Title");
+    -unity-text-align: middle-center;
+    justify-content: flex-start;
+}
+
+.button {
+    font-size: 50px;
+    width: 20%;
+    height: 10%;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    align-items: auto;
+    justify-content: flex-start;
+    align-self: center;
+    align-content: flex-start;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Assets/Fonts/LuckiestGuy-Regular.ttf?fileID=12800000&guid=042ca966657e9e141b5dacf89c3e5da0&type=3#LuckiestGuy-Regular");
+    background-image: url("project://database/Assets/Mobile%20Game%20GUI%20Vector%20Pack/Sprite/Button/start.png?fileID=2800000&guid=2b670f90a30bf0044a38c1a3a42638bc&type=3#start");
+}
