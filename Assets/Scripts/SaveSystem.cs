@@ -31,6 +31,19 @@ public static class SaveSystem
         return data;
     }
 
+    public static void ResetData()
+    {
+        // Delete the existing save file if it exists
+        if (File.Exists(GetPath()))
+        {
+            File.Delete(GetPath());
+        }
+
+        // Create and save a new, empty GameData file
+        GameData newData = new GameData();
+        Save(newData);
+    }
+
     private static string GetPath()
     {
         return Application.persistentDataPath + "/data.qnd";

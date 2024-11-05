@@ -1,0 +1,124 @@
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
+
+public class MainMenuManager : MonoBehaviour
+{
+    public enum UIState
+    {
+        MainMenu,
+        Shop,
+        Options,
+    }
+    [SerializeField] private UIState currentState;
+
+    [SerializeField] private TextMeshProUGUI highscoreText;
+    [SerializeField] private TextMeshProUGUI coinsIntText;
+    [SerializeField] private TextMeshProUGUI levelsText;
+    [SerializeField] private Image xpFillBar;
+
+    private LevelSystem levelSystem;
+
+    GameData gameData;
+
+    public GameObject mainMenuPanel;
+    public GameObject optionsMenuPanel;
+    public GameObject shopMenuPanel;
+
+    void Awake()
+    {
+        gameData = SaveSystem.Load();
+        levelSystem = GetComponent<LevelSystem>();
+        highscoreText.text = "Highscore : " + gameData.highscore.ToString();
+        coinsIntText.text = gameData.totalCoins.ToString();
+        levelsText.text = "Level : " + gameData.level;
+
+        currentState = UIState.MainMenu;
+        UpdateXPBar();
+
+    }
+
+
+    void Update()
+    {
+
+        switch (currentState)
+        {
+            case UIState.MainMenu:
+                mainMenuPanel.SetActive(true);
+                optionsMenuPanel.SetActive(false);
+                shopMenuPanel.SetActive(false);
+                break;
+            case UIState.Shop:
+                mainMenuPanel.SetActive(false);
+                optionsMenuPanel.SetActive(false);
+                shopMenuPanel.SetActive(true);
+                break;
+            case UIState.Options:
+                mainMenuPanel.SetActive(false);
+                optionsMenuPanel.SetActive(true);
+                shopMenuPanel.SetActive(false);
+                break;
+        }
+
+        highscoreText.text = "Highscore : " + gameData.highscore.ToString();
+        coinsIntText.text = gameData.totalCoins.ToString();
+        levelsText.text = "Level : " + gameData.level;
+        UpdateXPBar();
+
+    }
+
+    public void ResetDataFile()
+    {
+        SaveSystem.ResetData();
+        levelSystem.ResetData();
+
+        gameData = SaveSystem.Load();
+
+
+        highscoreText.text = "Highscore : " + gameData.highscore.ToString();
+        coinsIntText.text = gameData.totalCoins.ToString();
+        levelsText.text = "Level : " + gameData.level;
+    }
+    void UpdateXPBar()
+    {
+        gameData = SaveSystem.Load();
+
+        // Calculate fill amount based on XP progress
+        float fillAmount = (float)gameData.currentXP / gameData.xpToNextlevel;
+        xpFillBar.fillAmount = Mathf.Clamp01(fillAmount);  // Clamp to make sure it's between 0 and 1
+    }
+
+    public void OnPlayButtonPressed()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
+    public void OnShopButtonPressed()
+    {
+        currentState = UIState.Shop;
+        Debug.Log("Open SHop[");
+    }
+
+    public void OnOptionsButtonPressed()
+    {
+        currentState = UIState.Options;
+    }
+
+    public void OnHomeButtonPressed()
+    {
+        currentState = UIState.MainMenu;
+    }
+    public void OnRateUsPressed()
+    {
+
+    }
+
+
+    public void OnShareButtonPressed()
+    {
+
+    }
+}

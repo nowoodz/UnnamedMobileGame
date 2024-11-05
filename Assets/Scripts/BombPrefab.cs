@@ -17,7 +17,11 @@ public class BombPrefab : MonoBehaviour
 
     public void GameObjectTouched()
     {
-        gameManager.currentGameScore--;
+        if (gameManager.lifes > 0)
+        {
+            gameManager.DeductLife();
+
+        }
         Destroy(gameObject);
     }
 }

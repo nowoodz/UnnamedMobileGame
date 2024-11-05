@@ -45,7 +45,8 @@ public class GeneralGameObject : MonoBehaviour
     }
     public void GameObjectTouched()
     {
-        gameManager.currentGameScore++;
+        gameManager.currentGameScore += 10;
+        gameManager.currentGameCoins++;
 
         Destroy(gameObject);
     }
