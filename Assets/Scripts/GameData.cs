@@ -17,7 +17,7 @@ public class GameData
     public bool sound;
     public bool music;
 
-
+    public bool modeFruitRushUnlocked;
     public bool modeTreasureHuntUnlocked;
     public bool modeSpeedStormUnlocked;
     public bool modeColorFrenzyUnlocked;
@@ -35,6 +35,7 @@ public class GameData
         sound = true;
         music = true;
 
+        modeFruitRushUnlocked = true;
         modeTreasureHuntUnlocked = false;
         modeSpeedStormUnlocked = false;
         modeColorFrenzyUnlocked = false;

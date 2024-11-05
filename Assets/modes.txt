@@ -1,4 +1,4 @@
-Fruit Galore – A mode filled with an abundance of fruit, mixed with falling bombs. Avoid the bombs and successfully catch as much fruit as possible before time runs out.
+Fruit Rush – A mode filled with an abundance of fruit, mixed with falling bombs. Avoid the bombs and successfully catch as much fruit as possible before time runs out.
 
 Treasure Hunt
 Objects: Gold coins, diamonds, and rare artifacts, mixed with junk items.
@@ -8,9 +8,6 @@ Speed Storm
 Objects: Everyday items like balls, toys, and tools.
 Goal: Objects fall faster and faster, testing your reaction speed. Catch as many items as possible before the timer runs out.
 
-Potion Chaos
-Objects: Various colored potions with effects.
-Goal: Catch specific potions to get bonus points but avoid "poison" potions, which reset your score or temporarily freeze you.
 
 Color Frenzy
 Objects: Red, blue, green, and yellow items (like stars or gems).

@@ -51,8 +51,12 @@ public class GameManager : MonoBehaviour
                 SetNewHighscore(currentGameScore);
                 gameData.highscore = highscore;
             }
-
-            levelSystem.AddExperience((int)((currentGameScore / currentGameCoins) * 2));
+            if (currentGameCoins != 0 && currentGameScore != 0)
+            {
+                levelSystem.AddExperience((int)((currentGameScore / currentGameCoins) * 2));
+            }
+            else { levelSystem.AddExperience(0); }
+            
             gameData.totalCoins += coins;
             SaveSystem.Save(gameData);
 
