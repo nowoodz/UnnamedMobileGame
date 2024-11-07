@@ -21,7 +21,6 @@ public class GameData
     public bool modeTreasureHuntUnlocked;
     public bool modeSpeedStormUnlocked;
     public bool modeColorFrenzyUnlocked;
-    public bool modeDoubleTroubleUnlocked;
     public bool modePowerUpMadnessUnlocked;
 
 
@@ -39,7 +38,34 @@ public class GameData
         modeTreasureHuntUnlocked = false;
         modeSpeedStormUnlocked = false;
         modeColorFrenzyUnlocked = false;
-        modeDoubleTroubleUnlocked = false;
         modePowerUpMadnessUnlocked = false;
     }
+
+    public void CheckUnlockModes()
+    {
+        if (level >= 2 && !modeTreasureHuntUnlocked)
+        {
+            modeTreasureHuntUnlocked = true;
+            Debug.Log("Treasure Hunt mode unlocked!");
+        }
+
+        if (level >= 5 && !modeSpeedStormUnlocked)
+        {
+            modeSpeedStormUnlocked = true;
+            Debug.Log("Speed Storm mode unlocked!");
+        }
+
+        if (level >= 10 && !modeColorFrenzyUnlocked)
+        {
+            modeColorFrenzyUnlocked = true;
+            Debug.Log("Color Frenzy mode unlocked!");
+        }
+
+        if (level >= 15 && !modePowerUpMadnessUnlocked)
+        {
+            modePowerUpMadnessUnlocked = true;
+            Debug.Log("PowerUp Madness mode unlocked!");
+        }
+    }
+   
 }

@@ -35,6 +35,15 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftClickPosition"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8d311d7-a3ec-46e3-b0d0-405d09fc15ea"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,17 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
                     ""action"": ""TouchPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53cf1f85-da8f-45b1-b74d-60f295922b3b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClickPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +77,7 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
         // Touch
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
         m_Touch_TouchPosition = m_Touch.FindAction("TouchPosition", throwIfNotFound: true);
+        m_Touch_LeftClickPosition = m_Touch.FindAction("LeftClickPosition", throwIfNotFound: true);
     }
 
     ~@TouchInput()
@@ -124,11 +145,13 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Touch;
     private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
     private readonly InputAction m_Touch_TouchPosition;
+    private readonly InputAction m_Touch_LeftClickPosition;
     public struct TouchActions
     {
         private @TouchInput m_Wrapper;
         public TouchActions(@TouchInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @TouchPosition => m_Wrapper.m_Touch_TouchPosition;
+        public InputAction @LeftClickPosition => m_Wrapper.m_Touch_LeftClickPosition;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -141,6 +164,9 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
             @TouchPosition.started += instance.OnTouchPosition;
             @TouchPosition.performed += instance.OnTouchPosition;
             @TouchPosition.canceled += instance.OnTouchPosition;
+            @LeftClickPosition.started += instance.OnLeftClickPosition;
+            @LeftClickPosition.performed += instance.OnLeftClickPosition;
+            @LeftClickPosition.canceled += instance.OnLeftClickPosition;
         }
 
         private void UnregisterCallbacks(ITouchActions instance)
@@ -148,6 +174,9 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
             @TouchPosition.started -= instance.OnTouchPosition;
             @TouchPosition.performed -= instance.OnTouchPosition;
             @TouchPosition.canceled -= instance.OnTouchPosition;
+            @LeftClickPosition.started -= instance.OnLeftClickPosition;
+            @LeftClickPosition.performed -= instance.OnLeftClickPosition;
+            @LeftClickPosition.canceled -= instance.OnLeftClickPosition;
         }
 
         public void RemoveCallbacks(ITouchActions instance)
@@ -168,5 +197,6 @@ public partial class @TouchInput: IInputActionCollection2, IDisposable
     public interface ITouchActions
     {
         void OnTouchPosition(InputAction.CallbackContext context);
+        void OnLeftClickPosition(InputAction.CallbackContext context);
     }
 }

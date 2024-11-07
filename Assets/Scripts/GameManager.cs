@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,35 +7,39 @@ public class GameManager : MonoBehaviour
     private LevelSystem levelSystem;
 
     [SerializeField] UIManager uiManager;
+   
 
     public int lifes;
-    public int coins;
     public int highscore;
 
     public int currentGameScore;
     public int currentGameCoins;
 
+    public bool isGameStarted;
     public bool isGameOver;
-
+    public bool isGamePaused;
 
     public GameData gameData;
 
+    
+    
 
     private void Awake()
     {
+
         gameData = SaveSystem.Load();
         Application.targetFrameRate = -1;
         levelSystem = GetComponent<LevelSystem>();
-
-
     }
     void Start()
     {
         currentGameScore = 0;
         currentGameCoins = 0;
+        highscore = 0;
         lifes = 3;
 
         isGameOver = false;
+        isGamePaused = false;
     }
 
     // Update is called once per frame
@@ -42,31 +47,58 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver == true)
         {
-            gameData = SaveSystem.Load();
+            uiManager.currentState = UIManager.UIState.GameEnd;
+            uiManager.SetGameEndUI();
 
-            CoinsCollected(currentGameCoins);
-
-            if (currentGameScore > gameData.highscore)
-            {
-                SetNewHighscore(currentGameScore);
-                gameData.highscore = highscore;
-            }
-            if (currentGameCoins != 0 && currentGameScore != 0)
-            {
-                levelSystem.AddExperience((int)((currentGameScore / currentGameCoins) * 2));
-            }
-            else { levelSystem.AddExperience(0); }
-            
-            gameData.totalCoins += coins;
-            SaveSystem.Save(gameData);
-
-            SceneManager.LoadScene("MainMenu");
         }
 
         if (lifes == 0)
         {
             isGameOver = true;
         }
+
+
+    }
+
+    public void EndGameAndSaveVariablesAndGoToMenu()
+    {
+        gameData = SaveSystem.Load();
+
+        gameData.totalCoins += currentGameCoins;
+
+        if (currentGameScore > gameData.highscore)
+        {
+            gameData.highscore = currentGameScore;
+
+            Debug.Log("New Highscore!" + currentGameScore);
+            SaveSystem.Save(gameData);
+
+        }
+        gameData = SaveSystem.Load();
+        levelSystem.AddExperience((int)((currentGameScore / 1.8)));
+
+        SceneManager.LoadScene("MainMenu");
+    }
+
+
+    public void EndGameAndSaveVariablesAndReplay()
+    {
+        gameData = SaveSystem.Load();
+
+        gameData.totalCoins += currentGameCoins;
+
+        if (currentGameScore > gameData.highscore)
+        {
+            gameData.highscore = currentGameScore;
+
+            Debug.Log("New Highscore!" + currentGameScore);
+            SaveSystem.Save(gameData);
+
+        }
+        gameData = SaveSystem.Load();
+        levelSystem.AddExperience((int)((currentGameScore / 1.8)));
+
+        SceneManager.LoadScene("Game");
     }
 
     public void DeductLife()
@@ -79,13 +111,5 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
     }
 
-    public void CoinsCollected(int coinValue)
-    {
-        coins += coinValue;
-    }
 
-    public void SetNewHighscore(int newHighScoreValue)
-    {
-        highscore += newHighScoreValue;
-    }
 }

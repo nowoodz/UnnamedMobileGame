@@ -1,3 +1,4 @@
+using System.Net;
 using UnityEngine;
 
 public class SafeAreaScript : MonoBehaviour
@@ -40,5 +41,6 @@ public class SafeAreaScript : MonoBehaviour
 
         // Update the last known safe area
         lastSafeArea = safeArea;
+
     }
 }

@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class PrefabList : MonoBehaviour
 {
-    public GameObject[] prefabArray;
+    public GameObject[] fruitRushPrefabsArray;
+    public GameObject[] treasureHuntPrefabsArray;
+    public GameObject[] speedStormPrefabsArray;
+    public GameObject[] colorFrenzyPrefabsArray;
+    public GameObject[] powerUpMadnesshPrefabsArray;
 
     void Start()
     {

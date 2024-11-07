@@ -1,23 +1,26 @@
 Fruit Rush – A mode filled with an abundance of fruit, mixed with falling bombs. Avoid the bombs and successfully catch as much fruit as possible before time runs out.
+Requires Level 1 = default
 
 Treasure Hunt
-Objects: Gold coins, diamonds, and rare artifacts, mixed with junk items.
-Goal: Collect as many treasures as possible while avoiding junk. Junk items lower your score, so aim carefully!
+In this mode you are tasked to collect as many Treasures as possible while avoiding any junk items.
+On collecting a junk item, a life will be lost. 
+! Requires Level 2
 
 Speed Storm
-Objects: Everyday items like balls, toys, and tools.
-Goal: Objects fall faster and faster, testing your reaction speed. Catch as many items as possible before the timer runs out.
+Your everyday objects will be falling down from the storm in this game mode.
+Be aware, the storm may grow faster and therefore objects fall down faster.
+Catch the objects and avoid them from leaving the screen.
+Failure to catch an object reduces you lifes.
 
+! Requires level 5
 
 Color Frenzy
-Objects: Red, blue, green, and yellow items (like stars or gems).
-Goal: Only collect objects of a specified color. Every few seconds, the color changes, keeping you on your toes!
+Different colored objects will be falling down. You are tasked to catch a certain color.
+Be aware that the tasked color to catch may change every few seconds.
+! requires level 10
 
-Double Trouble
-Objects: Fruit, bombs, and stars (for points).
-Goal: Two objects fall simultaneously, and you have to catch both within a short time window for a bonus. Missing both lowers your score.
 
 Power-Up Madness
-Objects: Normal items, but with power-ups like slow motion, multipliers, and extra time mixed in.
-Goal: Prioritize catching power-ups to help you score higher before the timer runs out.
-
+Objects have powerups in this Game Mode.
+Prioritize catching different and or specific power-ups to help you score higher before the timer runs out.
+! requires level 15

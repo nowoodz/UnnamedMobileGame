@@ -12,12 +12,12 @@ public class GameModeScript : MonoBehaviour
         TreasureHunt,
         SpeedStorm,
         ColorFrenzy,
-        DoubleTrouble,
         PowerUpMadness
     }
 
     public GameMode currentMode;
 
+    public string currentModeString;
   
 
     private void Awake()
@@ -34,22 +34,19 @@ public class GameModeScript : MonoBehaviour
         switch (currentMode)
         {
             case GameMode.FruitRush:
-                
+                currentModeString = currentMode.ToString();
                 break;
             case GameMode.TreasureHunt:
-                
+                currentModeString = currentMode.ToString();
                 break;
             case GameMode.SpeedStorm:
-                
+                currentModeString = currentMode.ToString();
                 break;
             case GameMode.ColorFrenzy:
-                
-                break;
-            case GameMode.DoubleTrouble:
-               
+                currentModeString = currentMode.ToString();
                 break;
             case GameMode.PowerUpMadness:
-                
+                currentModeString = currentMode.ToString();
                 break;
         }
     }
@@ -69,8 +66,6 @@ public class GameModeScript : MonoBehaviour
             availableModes.Add(GameMode.SpeedStorm);
         if (gameData.modeColorFrenzyUnlocked == true)
             availableModes.Add(GameMode.ColorFrenzy);
-        if (gameData.modeDoubleTroubleUnlocked == true)
-            availableModes.Add(GameMode.DoubleTrouble);
         if (gameData.modePowerUpMadnessUnlocked == true)
             availableModes.Add(GameMode.PowerUpMadness);
 

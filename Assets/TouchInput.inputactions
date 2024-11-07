@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "LeftClickPosition",
+                    "type": "Button",
+                    "id": "d8d311d7-a3ec-46e3-b0d0-405d09fc15ea",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -24,6 +33,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53cf1f85-da8f-45b1-b74d-60f295922b3b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftClickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
