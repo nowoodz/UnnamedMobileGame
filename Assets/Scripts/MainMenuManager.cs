@@ -49,6 +49,8 @@ public class MainMenuManager : MonoBehaviour
     public GameObject optionsMenuPanel;
     public GameObject shopMenuPanel;
 
+    public bool isMusicOn;
+    public bool isSoundOn;
 
     void Awake()
     {
@@ -57,11 +59,12 @@ public class MainMenuManager : MonoBehaviour
         currentState = UIState.MainMenu;
 
         
-
-        
     }
     private void Start()
     {
+        isMusicOn = gameData.music;
+        isSoundOn = gameData.sound;
+
         UpdateXPBar();
         UpdateUITexts();
     }
@@ -255,5 +258,21 @@ public class MainMenuManager : MonoBehaviour
         gameModeBackgroundPage.SetActive(false);
         powerUpMadnesPage.SetActive(true);
         currentGameModePage = powerUpMadnesPage;
+    }
+
+    public void MusicButtonPressed()
+    {
+        if (isMusicOn == true)
+        {
+            isMusicOn = false;
+            gameData.music = false;
+            SaveSystem.Save(gameData);
+        }else if (isMusicOn == false)
+        {
+            isMusicOn= true;
+            gameData.music = true;
+            SaveSystem.Save(gameData);
+        }
+        
     }
 }

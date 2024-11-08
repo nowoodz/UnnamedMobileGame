@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "TouchPosition",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "b922ba03-cf34-42ff-b135-d4303b0698ca",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -28,8 +28,8 @@
                 {
                     "name": "",
                     "id": "f8c63d69-f0bf-4f22-9730-640ee3e80e59",
-                    "path": "<Touchscreen>/position",
-                    "interactions": "",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
                     "action": "TouchPosition",
@@ -40,7 +40,7 @@
                     "name": "",
                     "id": "53cf1f85-da8f-45b1-b74d-60f295922b3b",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
                     "action": "LeftClickPosition",

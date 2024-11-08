@@ -3,75 +3,81 @@ using UnityEngine.InputSystem;
 
 public class HandleTouchInput : MonoBehaviour
 {
-    // Reference to the generated Input Action class
+    private GameModeScript gameModeScript;
     private TouchInput touchInput;
     private Camera mainCamera;
-    [SerializeField]GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
 
     void Awake()
     {
-        // Initialize the Input Action instance
         touchInput = new TouchInput();
+        gameModeScript = GameObject.Find("GameModeManager").GetComponent<GameModeScript>();
     }
 
     void OnEnable()
     {
-        // Enable the TouchPosition action
         touchInput.Touch.TouchPosition.Enable();
         touchInput.Touch.LeftClickPosition.Enable();
     }
 
     void OnDisable()
     {
-        // Disable the TouchPosition action
         touchInput.Touch.TouchPosition.Disable();
         touchInput.Touch.LeftClickPosition.Disable();
     }
 
     void Start()
     {
-        // Cache the main camera reference
         mainCamera = Camera.main;
     }
 
     void Update()
     {
-        // Get touch position if available
-        Vector2 touchPosition = Vector2.zero;
-        bool inputDetected = false;
-        if (gameManager.isGameOver == false)
-        {
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed && gameManager.isGamePaused == false)
-            {
-                // Mobile touch input
-                touchPosition = touchInput.Touch.TouchPosition.ReadValue<Vector2>();
-                inputDetected = true;
-            }
-            else if (Mouse.current != null && Mouse.current.leftButton.isPressed && gameManager.isGamePaused == false)
-            {
-                // PC mouse input
-                touchPosition = Mouse.current.position.ReadValue();
-                inputDetected = true;
-            }
-        }
-        
+        // Handle touch input only when a new touch begins
+        if (gameManager.isGameOver || gameManager.isGamePaused) return;
 
-        if (inputDetected)
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
         {
-            // Perform raycasting based on input position
+            Vector2 touchPosition = touchInput.Touch.TouchPosition.ReadValue<Vector2>();
+            HandleTap(touchPosition);
+        }
+        // For mouse click on PC, detect the start of the click
+        else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Vector2 clickPosition = Mouse.current.position.ReadValue();
+            HandleTap(clickPosition);
+        }
+    }
+
+    private void HandleTap(Vector2 position)
+    {
+        if (gameModeScript.currentMode != GameModeScript.GameMode.ColorFrenzy)
+        {
             int excludedLayerMask = ~LayerMask.GetMask("Static", "Bomb");
-            Ray ray = mainCamera.ScreenPointToRay(touchPosition);
+            Ray ray = mainCamera.ScreenPointToRay(position);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, excludedLayerMask))
             {
                 GeneralGameObject currentGeneralGameObject = hit.transform.GetComponent<GeneralGameObject>();
-                currentGeneralGameObject.GameObjectTouched();
+                currentGeneralGameObject?.GameObjectTouched();
             }
             else if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Bomb")))
             {
                 BombPrefab bombPrefabScript = hit.transform.GetComponent<BombPrefab>();
-                bombPrefabScript.GameObjectTouched();
+                bombPrefabScript?.GameObjectTouched();
+            }
+        }
+        else
+        {
+            int excludedLayerMask = ~LayerMask.GetMask("Static");
+            Ray ray = mainCamera.ScreenPointToRay(position);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, excludedLayerMask))
+            {
+                ColorObject currentColorObject = hit.transform.GetComponent<ColorObject>();
+                currentColorObject?.GameObjectTouched();
             }
         }
     }

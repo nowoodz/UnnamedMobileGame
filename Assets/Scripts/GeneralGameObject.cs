@@ -20,10 +20,14 @@ public class GeneralGameObject : MonoBehaviour
 
     GameManager gameManager;
 
+    GameModeScript gameModeScript;
+
+
 
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameModeScript = GameObject.Find("GameModeManager").GetComponent<GameModeScript>();
 
         #region Rotation Starts
         randomRotationVectorList.Add(randomRotVectorX);
@@ -45,6 +49,7 @@ public class GeneralGameObject : MonoBehaviour
     }
     public void GameObjectTouched()
     {
+        
         gameManager.currentGameScore += 10;
         gameManager.currentGameCoins++;
 

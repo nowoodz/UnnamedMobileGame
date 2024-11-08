@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject gameEndPanel;
-    
+
 
     [SerializeField] private Image life_1;
     [SerializeField] private Image life_2;
@@ -34,19 +36,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GameModeScript gameModeScript;
 
-    [SerializeField] private TextMeshProUGUI gameModeText;
+    [SerializeField] private GameObject gameModeLockedUI;
+    // Game UI
+
     [SerializeField] private TextMeshProUGUI scoreIntText;
     [SerializeField] private TextMeshProUGUI coinsIntText;
+    [SerializeField] private TextMeshProUGUI currentGameModeText;
+    [SerializeField] private TextMeshProUGUI colorFrenzyCurrentColorText;
 
     // END GAME PANEL TEXTS AND UI
 
-   
+
     [SerializeField] private TextMeshProUGUI coinsCollectedText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI xpGainedText;
     [SerializeField] private TextMeshProUGUI newHighScoreText;
 
     [SerializeField] private GameObject adRetryButton;
+
+    // AUDIO
+    public bool isMusicOn;
+    public bool isSoundOn;
 
     void Awake()
     {
@@ -59,8 +69,15 @@ public class UIManager : MonoBehaviour
         life_1.sprite = heartRedSprite;
         life_2.sprite = heartRedSprite;
         life_3.sprite = heartRedSprite;
+
+        gameModeLockedUI.SetActive(false);
     }
 
+    private void Start()
+    {
+        isMusicOn = gameData.music;
+        isSoundOn = gameData.sound;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -74,7 +91,7 @@ public class UIManager : MonoBehaviour
                 gamePanel.SetActive(false);
                 optionsPanel.SetActive(false);
                 gameEndPanel.SetActive(false);
-                gameModeText.text = gameModeScript.currentMode.ToString();
+
 
                 gameManager.isGameStarted = false;
                 break;
@@ -85,6 +102,7 @@ public class UIManager : MonoBehaviour
                 gameEndPanel.SetActive(false);
                 gameManager.isGameStarted = true;
 
+                currentGameModeText.text = gameModeScript.currentModeString;
                 Time.timeScale = 1f;
                 gameManager.isGamePaused = false;
                 break;
@@ -102,14 +120,38 @@ public class UIManager : MonoBehaviour
                 optionsPanel.SetActive(false);
                 gameEndPanel.SetActive(true);
 
-                if (gameManager.lifes == 0)
-                {
-                    adRetryButton.SetActive(true);
-                }else {  adRetryButton.SetActive(false); }
+                
                 break;
         }
 
 
+    }
+    public void FlashGameModeLockedText()
+    {
+        StartCoroutine(FlashGameModeLockedTextCoroutine());
+    }
+
+    IEnumerator FlashGameModeLockedTextCoroutine()
+    {
+        gameModeLockedUI.SetActive(true);
+        yield return new WaitForSeconds(2);
+        gameModeLockedUI.SetActive(false);
+
+    }
+    public void MusicButtonPressed()
+    {
+        if (isMusicOn == true)
+        {
+            isMusicOn = false;
+            gameData.music = false;
+            SaveSystem.Save(gameData);
+        }
+        else if (isMusicOn == false)
+        {
+            isMusicOn = true;
+            gameData.music = true;
+            SaveSystem.Save(gameData);
+        }
     }
 
     public void SetGameEndUI()
@@ -125,7 +167,14 @@ public class UIManager : MonoBehaviour
             newHighScoreText.gameObject.SetActive(true);
         }else { newHighScoreText.gameObject.SetActive(false); }
 
+        if (gameManager.lifes == 0)
+        {
+            adRetryButton.SetActive(true);
+        }
+        else { adRetryButton.SetActive(false); }
+
     }
+
 
     public void DeductLifeUI()
     {
@@ -154,7 +203,7 @@ public class UIManager : MonoBehaviour
             life_3.sprite = heartBlackSprite;
         }
     }
-    public void GameModeStartPlayButton()
+    public void StartGame()
     {
         currentState = UIState.Game;
     }
@@ -181,5 +230,20 @@ public class UIManager : MonoBehaviour
     public void HomePressed()
     {
         gameManager.EndGameAndSaveVariablesAndGoToMenu();
+    }
+
+    public void GoBackToMainMenuButtonPressed()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SetCurrentColorTextColorFrenzy()
+    {
+        colorFrenzyCurrentColorText.text = gameModeScript.currentColor;
+    }
+
+    public void SetColorFrenzyUI()
+    {
+        colorFrenzyCurrentColorText.gameObject.SetActive(true);
     }
 }
