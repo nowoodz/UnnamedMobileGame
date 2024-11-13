@@ -6,7 +6,6 @@ public class PrefabList : MonoBehaviour
     public GameObject[] treasureHuntPrefabsArray;
     public GameObject[] speedStormPrefabsArray;
     public GameObject[] colorFrenzyPrefabsArray;
-    public GameObject[] powerUpMadnesshPrefabsArray;
 
     void Start()
     {

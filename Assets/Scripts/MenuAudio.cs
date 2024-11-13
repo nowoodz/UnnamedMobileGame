@@ -57,4 +57,5 @@ public class MenuAudio : MonoBehaviour
         // Update last song index
         lastSongIndex = randomIndex;
     }
+
 }

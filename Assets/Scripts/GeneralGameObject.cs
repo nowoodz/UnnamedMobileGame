@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GeneralGameObject : MonoBehaviour
 {
-
+    private GameSounds gameSounds;
     #region Rotation Variables
     private float rotationSpeed = 50f;
 
@@ -22,13 +22,16 @@ public class GeneralGameObject : MonoBehaviour
 
     GameModeScript gameModeScript;
 
+    GameData gameData;
+
 
 
     private void Awake()
     {
+        gameData = SaveSystem.Load();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameModeScript = GameObject.Find("GameModeManager").GetComponent<GameModeScript>();
-
+        gameSounds = GameObject.Find("GameSounds").GetComponent<GameSounds>();
         #region Rotation Starts
         randomRotationVectorList.Add(randomRotVectorX);
         randomRotationVectorList.Add(randomRotVectorY);
@@ -49,10 +52,25 @@ public class GeneralGameObject : MonoBehaviour
     }
     public void GameObjectTouched()
     {
-        
-        gameManager.currentGameScore += 10;
-        gameManager.currentGameCoins++;
+        gameSounds.PlayPickupSound();
+        if (gameData.IsScoreBoostActive())
+        {
+            gameManager.currentGameScore += 20;
+        }
+        else
+        {
+            gameManager.currentGameScore += 10;
+        }
 
+        if (gameData.IsCoinsBoostActive())
+        {
+            gameManager.currentGameCoins += 2;
+
+        }
+        else
+        {
+            gameManager.currentGameCoins++;
+        }
         Destroy(gameObject);
     }
 

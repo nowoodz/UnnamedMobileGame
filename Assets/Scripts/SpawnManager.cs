@@ -47,10 +47,7 @@ public class SpawnManager : MonoBehaviour
         {
             spawnPrefabsAccordingToModeArray = prefabList.colorFrenzyPrefabsArray;
         }
-        else if (gameModeScript.currentModeString == "PowerUpMadness")
-        {
-            spawnPrefabsAccordingToModeArray = prefabList.powerUpMadnesshPrefabsArray;
-        }
+
 
         if (spawnPrefabsAccordingToModeArray != null)
         {

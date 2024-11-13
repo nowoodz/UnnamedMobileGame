@@ -16,7 +16,7 @@ public class GameModeScript : MonoBehaviour
         TreasureHunt,
         SpeedStorm,
         ColorFrenzy,
-        PowerUpMadness
+
     }
 
     public GameMode currentMode;
@@ -38,6 +38,8 @@ public class GameModeScript : MonoBehaviour
     [SerializeField] string[] gameModeColors;
     private bool resetingColor;
     private int randomInterval;
+
+    [SerializeField] GameSounds gameSounds;
 
     private void Awake()
     {
@@ -73,15 +75,13 @@ public class GameModeScript : MonoBehaviour
                 }
                 
                 break;
-            case GameMode.PowerUpMadness:
-                currentModeString = currentMode.ToString();
-                break;
         }
     }
 
 
     public void FruitRushButtonClicked()
     {
+        gameSounds.PlayButtonSound();
         if (gameData.modeFruitRushUnlocked == true)
         {
             currentMode = GameMode.FruitRush;
@@ -97,6 +97,7 @@ public class GameModeScript : MonoBehaviour
 
     public void TreasureHuntButtonClicked()
     {
+        gameSounds.PlayButtonSound();
         if (gameData.modeTreasureHuntUnlocked == true)
         {
             currentMode = GameMode.TreasureHunt;
@@ -112,6 +113,7 @@ public class GameModeScript : MonoBehaviour
     
     public void SpeedStormButtonClicked()
     {
+        gameSounds.PlayButtonSound();
         if (gameData.modeSpeedStormUnlocked == true)
         {
             currentMode = GameMode.SpeedStorm;
@@ -127,6 +129,7 @@ public class GameModeScript : MonoBehaviour
 
     public void ColorFrenzyButtonClicked()
     {
+        gameSounds.PlayButtonSound();
         if (gameData.modeColorFrenzyUnlocked == true)
         {
             currentMode = GameMode.ColorFrenzy;
@@ -140,20 +143,6 @@ public class GameModeScript : MonoBehaviour
         }
     }
 
-    public void PowerUpMadnessButtonClicked()
-    {
-        if (gameData.modePowerUpMadnessUnlocked == true)
-        {
-            currentMode = GameMode.PowerUpMadness;
-            uiManager.StartGame();
-
-            Physics.gravity = defaultGravity;
-        }
-        else
-        {
-            uiManager.FlashGameModeLockedText();
-        }
-    }
     IEnumerator GenerateColorWithTimer()
     {
         resetingColor = true;
@@ -177,11 +166,30 @@ public class GameModeScript : MonoBehaviour
     {
         if (color == currentColor)
         {
-            gameManager.currentGameCoins++;
-            gameManager.currentGameScore += 10;
+            gameSounds.PlayPickupSound();
+            gameData = SaveSystem.Load();
+
+            if (gameData.IsScoreBoostActive())
+            {
+                gameManager.currentGameScore += 20;
+            }
+            else
+            {
+                gameManager.currentGameScore += 10;
+            }
+            if (gameData.IsCoinsBoostActive())
+            {
+                gameManager.currentGameCoins += 2;
+            }
+            else
+            {
+                gameManager.currentGameCoins++;
+            }
+            
         }
         else if (color != currentColor)
         {
+            gameSounds.PlayWrongSound();
             gameManager.DeductLife();
         }
     }

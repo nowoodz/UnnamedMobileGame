@@ -22,26 +22,20 @@ public class LevelSystem : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-
-
-
-
-    }
     public void AddExperience(int xpAmount)
     {
         gameData = SaveSystem.Load();
+
         xp += xpAmount;
+        gameData.currentXP += xpAmount; 
 
         while (xp >= xpToNextLevel) // Check if the player can level up
         {
             LevelUP();
         }
 
-        gameData.currentXP = xp;
+        Debug.Log("Experience added to Data : " + xpAmount);
         SaveSystem.Save(gameData);
-
     }
 
     private void LevelUP()

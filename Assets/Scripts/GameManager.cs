@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private LevelSystem levelSystem;
-
+    [SerializeField] LevelSystem levelSystem;
     [SerializeField] UIManager uiManager;
+    [SerializeField] GameSounds gameSounds;
    
 
     public int lifes;
@@ -14,22 +14,17 @@ public class GameManager : MonoBehaviour
 
     public int currentGameScore;
     public int currentGameCoins;
-
     public bool isGameStarted;
     public bool isGameOver;
     public bool isGamePaused;
 
     public GameData gameData;
 
-    
-    
-
     private void Awake()
     {
 
         gameData = SaveSystem.Load();
-        Application.targetFrameRate = -1;
-        levelSystem = GetComponent<LevelSystem>();
+
     }
     void Start()
     {
@@ -56,8 +51,6 @@ public class GameManager : MonoBehaviour
         {
             isGameOver = true;
         }
-
-
     }
 
     public void EndGameAndSaveVariablesAndGoToMenu()
@@ -70,11 +63,9 @@ public class GameManager : MonoBehaviour
         {
             gameData.highscore = currentGameScore;
 
-            Debug.Log("New Highscore!" + currentGameScore);
-            SaveSystem.Save(gameData);
-
         }
-        gameData = SaveSystem.Load();
+        SaveSystem.Save(gameData);
+
         levelSystem.AddExperience((int)((currentGameScore / 1.8)));
 
         SceneManager.LoadScene("MainMenu");
@@ -83,26 +74,28 @@ public class GameManager : MonoBehaviour
 
     public void EndGameAndSaveVariablesAndReplay()
     {
+
         gameData = SaveSystem.Load();
 
         gameData.totalCoins += currentGameCoins;
 
+        
         if (currentGameScore > gameData.highscore)
         {
             gameData.highscore = currentGameScore;
-
-            Debug.Log("New Highscore!" + currentGameScore);
-            SaveSystem.Save(gameData);
-
         }
-        gameData = SaveSystem.Load();
+        SaveSystem.Save(gameData);
+
         levelSystem.AddExperience((int)((currentGameScore / 1.8)));
 
         SceneManager.LoadScene("Game");
     }
+    
+
 
     public void DeductLife()
     {
+        gameSounds.PlayWrongSound();
         lifes--;
         uiManager.DeductLifeUI();
     }
@@ -110,6 +103,5 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
     }
-
 
 }

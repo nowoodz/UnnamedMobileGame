@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class OutOfBounds : MonoBehaviour
 {
-    GameModeScript gameModeScript;
-    GameManager gameManager;
+    [SerializeField] private GameSounds gameSounds;
+    [SerializeField] private GameModeScript gameModeScript;
+    [SerializeField] private GameManager gameManager;
 
     private void Awake()
     {
-        gameModeScript = GameObject.Find("GameModeManager").GetComponent<GameModeScript>();
 
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
     }
     private void OnTriggerEnter(Collider other)
@@ -19,6 +18,7 @@ public class OutOfBounds : MonoBehaviour
         {
             if (gameManager.lifes > 0)
             {
+                gameSounds.PlayWrongSound();
                 gameManager.DeductLife();
                 Destroy(other.gameObject);
             }
